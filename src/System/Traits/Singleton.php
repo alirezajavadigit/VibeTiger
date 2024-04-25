@@ -7,6 +7,8 @@
 
 namespace VibeTiger\System\Traits;
 
+use VibeTiger\System\Kernel;
+
 trait Singleton
 {
     /**
@@ -20,14 +22,19 @@ trait Singleton
      * Private constructor to prevent instantiation from outside the class.
      * 
      * This constructor is declared as private to prevent the instantiation of 
-     * the class from outside the trait itself. This is commonly used in 
-     * singleton patterns to ensure that only one instance of the class can exist.
+     * the class from outside the class itself. It initializes the Kernel 
+     * instance with the provided URL, username, and access key, and then logs 
+     * in to the system.
      */
     private function __construct()
     {
-        // Constructor intentionally left empty.
-    }
+        // Initialize the Kernel instance with the provided URL, username, and access key.
+        self::$kernel = new Kernel(self::$url, self::$username, self::$accessKey);
 
+        // Log in to the system.
+        self::$kernel->login();
+    }
+    
     /**
      * Get the singleton instance of the class.
      *
@@ -38,8 +45,11 @@ trait Singleton
      * property $instance. This ensures that only one instance of the class is 
      * created throughout the application's lifecycle.
      */
-    public static function getInstance()
+    public static function getInstance($url, $username, $accessKey)
     {
+        self::$url = $url;
+        self::$username = $username;
+        self::$accessKey = $accessKey;
         // If the instance does not exist, create a new one and assign it to $instance.
         return self::$instance ? self::$instance : self::$instance = new self();
     }
