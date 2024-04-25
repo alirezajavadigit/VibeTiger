@@ -1,0 +1,20 @@
+{
+    "name": "alirezajavadi/vibetiger",
+    "description": "VibeTiger is a powerful PHP library that seamlessly integrates with the VTiger CRM API, empowering developers to effortlessly manage and streamline customer relationships. With its intuitive interface and robust features, VibeTiger simplifies CRM tasks, enhances productivity, and elevates the overall customer experience. Say goodbye to complexity and hello to seamless CRM integration with VibeTiger.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alireza Javadi",
+            "email": "e@alirezajawadi.ir"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "VibeTiger\\": "src/"
+        }
+    }
+}
