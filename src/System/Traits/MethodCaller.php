@@ -16,7 +16,7 @@ trait MethodCaller
      * @param array $args An array of arguments to pass to the method.
      * @return mixed The result of the method call.
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args): mixed
     {
         // Call the methodCaller method of the current instance with provided arguments.
         return self::$instance->methodCaller(self::$instance, $method, $args);
@@ -29,7 +29,7 @@ trait MethodCaller
      * @param array $args An array of arguments to pass to the method.
      * @return mixed The result of the method call.
      */
-    public static function __callStatic($method, $args)
+    public static function __callStatic(string $method, array $args): mixed
     {
         // Call the methodCaller method of the current instance with provided arguments.
         return self::$instance->methodCaller(self::$instance, $method, $args);
@@ -43,7 +43,7 @@ trait MethodCaller
      * @param array $args An array of arguments to pass to the method.
      * @return mixed The result of the method call.
      */
-    private function methodCaller($object, $method, $args)
+    private function methodCaller($object, string $method, array $args): mixed
     {
         // Call the method on the object with provided arguments.
         return call_user_func_array(array($object, $method), $args);
