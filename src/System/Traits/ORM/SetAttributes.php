@@ -31,6 +31,27 @@ trait SetAttributes
     private $httpVerb;
 
     /**
+     * The query associated with the attributes.
+     *
+     * @var string The query associated with the attributes.
+     */
+    private string $query;
+
+    /**
+     * Parameters associated with the attributes.
+     *
+     * @var array Parameters associated with the attributes.
+     */
+    private array $params;
+
+    /**
+     * The operation associated with the attributes.
+     *
+     * @var string The operation associated with the attributes.
+     */
+    private string $operation;
+
+    /**
      * Get the "where" condition for the query.
      *
      * @return mixed The "where" condition for the query.
@@ -95,6 +116,75 @@ trait SetAttributes
     public function setHttpVerb($httpVerb)
     {
         $this->httpVerb = $httpVerb;
+
+        return $this;
+    }
+
+    /**
+     * Get the query associated with the attributes.
+     *
+     * @return mixed The query associated with the attributes.
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * Set the query associated with the attributes.
+     *
+     * @param mixed $query The query to be associated with the attributes.
+     * @return $this This instance for method chaining.
+     */
+    public function setQuery($query)
+    {
+        $this->query = $query;
+
+        return $this;
+    }
+
+    /**
+     * Get the parameters associated with the attributes.
+     *
+     * @return array The parameters associated with the attributes.
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * Set the parameters associated with the attributes.
+     *
+     * @param array $params The parameters to be associated with the attributes.
+     * @return $this This instance for method chaining.
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
+     * Get the operation associated with the attributes.
+     *
+     * @return string The operation associated with the attributes.
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+
+    /**
+     * Set the operation associated with the attributes.
+     *
+     * @param string $operation The operation to be associated with the attributes.
+     * @return $this This instance for method chaining.
+     */
+    public function setOperation(string $operation)
+    {
+        $this->operation = $operation;
 
         return $this;
     }
