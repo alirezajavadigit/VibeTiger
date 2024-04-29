@@ -12,6 +12,27 @@ use VibeTiger\System\Kernel;
 trait Singleton
 {
     /**
+     * The URL for accessing the CRM system.
+     *
+     * @var string|null The URL for accessing the CRM system.
+     */
+    private static $url;
+
+    /**
+     * The username for authentication.
+     *
+     * @var string|null The username for authentication.
+     */
+    private static $username;
+
+    /**
+     * The access key for authentication.
+     *
+     * @var string|null The access key for authentication.
+     */
+    private static $accessKey;
+
+    /**
      * The singleton instance of the class.
      *
      * @var self|null The singleton instance of the class.
@@ -34,7 +55,7 @@ trait Singleton
         // Log in to the system.
         self::$kernel->login();
     }
-    
+
     /**
      * Get the singleton instance of the class.
      *
