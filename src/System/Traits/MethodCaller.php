@@ -45,7 +45,9 @@ trait MethodCaller
      */
     private function methodCaller($object, string $method, array $args): mixed
     {
+        $suffix = 'set';
+        $methodName = $suffix . strtoupper($method[0]) . substr($method, 1);
         // Call the method on the object with provided arguments.
-        return call_user_func_array(array($object, $method), $args);
+        return call_user_func_array(array($object, $methodName), $args);
     }
 }
