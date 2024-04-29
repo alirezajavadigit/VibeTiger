@@ -53,19 +53,6 @@ trait SetQuery
     }
 
     /**
-     * Get the second value based on operation.
-     *
-     * @return mixed|null The second value if operation is 'query', null otherwise.
-     */
-    private function secondValue()
-    {
-        if (strtolower($this->getOperation()) === "query") {
-            return $this->getSql();
-        }
-        return null;
-    }
-
-    /**
      * Generate the last query based on HTTP verb.
      *
      * @param string $httpVerb The HTTP verb associated with the query.
