@@ -7,7 +7,7 @@ VibeTiger: Your seamless VTiger CRM companion. Effortlessly manage customer rela
 To use VibeTiger in your project, run the following command in your terminal:
 
 ```bash
-composer install alirezajavadi/vibetiger
+composer require alirezajavadi/vibetiger
 ```
 
 ## Usage
@@ -39,6 +39,7 @@ $vibeTiger::module("Contacts")->operation("query")->get();
 $vibeTiger::module("Users")->operation("query")->where("id = 123x123")->get();
 
 ```
+
 ## Features
 
 - Fluent interface to interact with various modules.
@@ -47,7 +48,7 @@ $vibeTiger::module("Users")->operation("query")->where("id = 123x123")->get();
 
 ## Requirements
 
-- PHP 7.4 or higher
+- PHP 8.1 or higher
 - Composer
 
 ## Contributing
