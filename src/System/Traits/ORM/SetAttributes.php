@@ -24,13 +24,6 @@ trait SetAttributes
     private $module;
 
     /**
-     * The HTTP verb associated with the attributes.
-     *
-     * @var string The HTTP verb associated with the attributes.
-     */
-    private $httpVerb;
-
-    /**
      * The query associated with the attributes.
      *
      * @var string The query associated with the attributes.
@@ -93,29 +86,6 @@ trait SetAttributes
     public function setModule($module)
     {
         $this->module = $module;
-
-        return $this;
-    }
-
-    /**
-     * Get the HTTP verb associated with the attributes.
-     *
-     * @return string The HTTP verb associated with the attributes.
-     */
-    public function getHttpVerb()
-    {
-        return $this->httpVerb;
-    }
-
-    /**
-     * Set the HTTP verb associated with the attributes.
-     *
-     * @param string $httpVerb The HTTP verb associated with the attributes.
-     * @return $this This instance for method chaining.
-     */
-    public function setHttpVerb($httpVerb)
-    {
-        $this->httpVerb = $httpVerb;
 
         return $this;
     }
