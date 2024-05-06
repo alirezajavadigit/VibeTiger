@@ -38,14 +38,14 @@ class Kernel
 	private $accessKey;
 
 	/**
-	 * @var string $token The authentication token.
+	 * @var string $accessToken The authentication accessToken.
 	 */
-	public $token;
+	public $accessToken;
 
 	/**
-	 * @var string $errorMsg Holds error messages encountered during operations.
+	 * @var string $error Holds error messages encountered during operations.
 	 */
-	public $errorMsg = '';
+	public $error = '';
 
 	/**
 	 * @var \GuzzleHttp\Client $client GuzzleHttp client for making HTTP requests.
@@ -66,7 +66,7 @@ class Kernel
 		$this->url = $url;
 		$this->username = $name;
 		$this->accessKey = $key;
-		$this->token = $key;
+		$this->accessToken = $key;
 
 		// Initialize GuzzleHttp client
 		$this->client = new Client([
@@ -79,7 +79,7 @@ class Kernel
 	/**
 	 * Retrieves the authentication challenge from the external system.
 	 *
-	 * @return string|bool The authentication token on success, false on failure.
+	 * @return string|bool The authentication accessToken on success, false on failure.
 	 */
 	private function getChallenge()
 	{
@@ -94,13 +94,13 @@ class Kernel
 			$response = json_decode($response->getBody()->getContents(), true);
 
 			if ($response['success'] === false) {
-				$this->errorMsg = 'getChallenge failed: ' . $response['error']['message'] . '<br>';
+				$this->error = 'getChallenge failed: ' . $response['error']['message'] . '<br>';
 				return false;
 			}
 
 			return $response['result']['token'];
 		} catch (GuzzleException $e) {
-			$this->errorMsg = $e->getMessage();
+			$this->error = $e->getMessage();
 			return false;
 		}
 	}
@@ -112,12 +112,12 @@ class Kernel
 	 */
 	function login()
 	{
-		$token = $this->getChallenge();
-		if (!$token) {
+		$accessToken = $this->getChallenge();
+		if (!$accessToken) {
 			return false;
 		}
 
-		$generatedKey = md5($token . $this->accessKey);
+		$generatedKey = md5($accessToken . $this->accessKey);
 
 		try {
 			$response = $this->client->request('POST', '', [
@@ -131,16 +131,16 @@ class Kernel
 			$response = json_decode($response->getBody()->getContents(), true);
 
 			if ($response['success'] === false) {
-				$this->errorMsg = 'Login failed: ' . $response['error']['message'] . '<br>';
+				$this->error = 'Login failed: ' . $response['error']['message'] . '<br>';
 				return false;
 			}
 
 			$_SESSION['userId'] = $response['result']['userId'];
-			$this->token = $response['result']['sessionName'];
+			$this->accessToken = $response['result']['sessionName'];
 
 			return true;
 		} catch (GuzzleException $e) {
-			$this->errorMsg = $e->getMessage();
+			$this->error = $e->getMessage();
 			return false;
 		}
 	}
@@ -158,7 +158,7 @@ class Kernel
 		$type = $values[2];
 		$filepath = ""; // Placeholder for file path (if needed)
 		$params['operation'] = $name;
-		$params['sessionName'] = $this->token;
+		$params['sessionName'] = $this->accessToken;
 
 		try {
 			if (strtolower($type) === 'post') {
@@ -175,7 +175,7 @@ class Kernel
 			$result = $response->getBody()->getContents();
 			return $this->return($result, $name);
 		} catch (GuzzleException $e) {
-			$this->errorMsg = $e->getMessage();
+			$this->error = $e->getMessage();
 			return false;
 		}
 	}
@@ -191,11 +191,11 @@ class Kernel
 	{
 		$response = json_decode($result, true);
 		if (!$response) {
-			$this->errorMsg = "$name failed: " . $result . "<br>";
+			$this->error = "$name failed: " . $result . "<br>";
 			return false;
 		}
 		if ($response['success'] === false) {
-			$this->errorMsg = "$name failed: " . $response['error']['message'] . "<br>";
+			$this->error = "$name failed: " . $response['error']['message'] . "<br>";
 			return false;
 		}
 		return $response['result'];
