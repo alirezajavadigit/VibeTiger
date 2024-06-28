@@ -40,6 +40,27 @@ trait Singleton
     private static $instance = null;
 
     /**
+     * Lock for thread safety.
+     * 
+     * @var mixed Lock for thread safety.
+     */
+    private static $lock = null;
+
+    /**
+     * Prevent instance from being cloned.
+     */
+    private function __clone()
+    {
+    }
+
+    /**
+     * Prevent instance from being unserialized.
+     */
+    private function __wakeup()
+    {
+    }
+
+    /**
      * Private constructor to prevent instantiation from outside the class.
      * 
      * This constructor is declared as private to prevent the instantiation of 
@@ -49,6 +70,10 @@ trait Singleton
      */
     private function __construct()
     {
+        // Initialize lock
+        if (is_null(self::$lock)) {
+            self::$lock = new \stdClass();
+        }
         // Initialize the Kernel instance with the provided URL, username, and access key.
         self::$kernel = new Kernel(self::$url, self::$username, self::$accessKey);
 
@@ -71,7 +96,13 @@ trait Singleton
         self::$url = $url;
         self::$username = $username;
         self::$accessKey = $accessKey;
-        // If the instance does not exist, create a new one and assign it to $instance.
-        return self::$instance ? self::$instance : self::$instance = new self();
+        if (is_null(self::$instance)) {
+            // Thread-safe lazy initialization
+            $lock = self::$lock; // to ensure thread safety
+            if (is_null(self::$instance)) {
+                self::$instance = new self();
+            }
+        }
+        return self::$instance;
     }
 }
